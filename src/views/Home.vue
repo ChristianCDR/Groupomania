@@ -7,7 +7,7 @@
       <h1>Connectez-vous</h1>
       <input v-model="email" placeholder="Adresse e-mail"/>
       <input v-model="motDePasse" placeholder="Mot de passe"/>
-      <button class="btn-1" type="submit" :class="{'disabled':!validatedFields}"> Se connecter </button>
+      <button class="btn-1" type="submit" :class="{'disabled':!validatedFields}"  @click="logUserIn"> Se connecter </button>
       <p>Pas encore de compte?<a href="#" @click="signUpMode()">Inscrivez-vous </a></p>    
     </form>
 
@@ -19,7 +19,7 @@
       <input v-model="anniversaire" placeholder="Date de Naissance"/>
       <input v-model="motDePasse" placeholder="Mot de passe"/>
 
-      <button class="btn-2" type="submit"> S'incrire </button>
+      <button class="btn-2" type="submit" :class="{'disabled': !validatedFields}" @click="signUserUp"> S'incrire </button>
       <p>Déjà un compte?<a href="#" @click="loginMode()">Connectez-vous</a></p>    
     </form>
 
@@ -69,6 +69,31 @@ export default {
     },
     signUpMode: function(){
       this.mode="signup"
+    },
+    logUserIn: function(){
+       this.$store.dispatch('logUserIn',{
+        email: this.email,
+        motDePasse:this.motDePasse
+      }).then((response) => {
+          console.log(response)
+        })
+        .catch((error)=>{
+          console.log(error);
+        })
+    },
+    signUserUp: function(){
+      this.$store.dispatch('signUserUp',{
+        nom: this.nom,
+        prenom:this.prenom,
+        email: this.email,
+        anniversaire:this.anniversaire,
+        motDePasse:this.motDePasse
+      }).then((response) => {
+          console.log(response)
+        })
+        .catch((error)=>{
+          console.log(error);
+        })
     }
   }
 }

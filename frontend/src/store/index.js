@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 const axios = require('axios');
 const instance = axios.create({
-  baseURL: '?#'
+  baseURL: '?#/auth'
 });
 export default createStore({
   state: {

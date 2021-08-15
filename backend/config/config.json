@@ -1,0 +1,27 @@
+{
+  "development": {
+    "username": "root",
+    "password": "process.env.DBmdp",
+    "database": "gmDB",
+    "host": "localhost",
+    "dialect": "mysql",
+    "operatorsAliases": false  
+  },
+  "test": {
+    "username": "root",
+    "password": "process.env.DBmdp",
+    "database": "gmDB",
+    "host": "localhost",
+    "dialect": "mysql",
+    "operatorsAliases": false
+    
+  },
+  "production": {
+    "username": "root",
+    "password": "process.env.DBmdp",
+    "database": "gmDB",
+    "host": "localhost",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  }
+}

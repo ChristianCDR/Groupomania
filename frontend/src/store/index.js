@@ -1,8 +1,6 @@
 import { createStore } from 'vuex'
 const axios = require('axios');
-const instance = axios.create({
-  baseURL: '?#/auth'
-});
+
 export default createStore({
   state: {
   },
@@ -12,7 +10,7 @@ export default createStore({
     logUserIn:({commit}, userInfos)=>{
       return new Promise((resolve, reject)=>{
         commit;
-        instance.post('/login', userInfos)
+        axios.post('http://localhost:3000/auth/login', userInfos)
         .then(function (response) {
           resolve(response);
         })
@@ -25,7 +23,7 @@ export default createStore({
     signUserUp: ({commit}, userInfos)=>{
       return new Promise((resolve, reject)=>{
         commit;
-        instance.post('/signup', userInfos)
+        axios.post('http://localhost:3000/auth/signup', userInfos)
         .then(function (response) {
           resolve(response);
         })

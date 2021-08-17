@@ -21,10 +21,6 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      anniversaire: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
       motDePasse: {
         type: Sequelize.STRING,
         allowNull: false

@@ -16,7 +16,6 @@
       <input v-model="nom" placeholder="Nom"/>
       <input v-model="prenom" placeholder="Prenom"/>
       <input v-model="email" placeholder="Adresse e-mail professionnel"/>
-      <input v-model="anniversaire" placeholder="Date de Naissance"/>
       <input v-model="motDePasse" placeholder="Mot de passe"/>
 
       <button class="btn-2" type="submit" :class="{'disabled': !validatedFields}" @click="signUserUp"> S'incrire </button>
@@ -42,14 +41,13 @@ export default {
     nom:"",
     prenom:"",
     email:"",
-    anniversaire:"",
     motDePasse:""
     }
   },
   computed:{
     validatedFields: function () {
       if (this.mode == 'signup') {
-        if (this.nom != "" && this.prenom != "" && this.email != "" && this.anniversaire != "" && this.motDePasse != "") {
+        if (this.nom != "" && this.prenom != "" && this.email != "" && this.motDePasse != "") {
           return true;
         } else {
           return false;
@@ -86,7 +84,6 @@ export default {
         nom: this.nom,
         prenom:this.prenom,
         email: this.email,
-        anniversaire:this.anniversaire,
         motDePasse:this.motDePasse
       }).then((response) => {
           console.log(response)

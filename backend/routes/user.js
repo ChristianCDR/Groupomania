@@ -4,7 +4,7 @@ const ctrlUser= require('../controllers/user.js');
 //const ctrlPass= require('../middleware/passwordValidator');
 //const ctrlEmail= require('../middleware/emailValidator');
 
- route.post('/signup',ctrlUser.saveInDB);
+ route.post('/signup', ctrlUser.saveInDB);
  //route.post('/login', ctrlUser.login); 
 
  module.exports= route; 

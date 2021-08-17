@@ -1,13 +1,11 @@
-const userModel= require('../models/usermodel');
+const models= require('../models');
+const usersModel=models.user;
+
 exports.saveInDB=(req,res, next)=>{
   const userInfos={
-    nom: req.body.nom,
-    prenom:req.body.prenom,
-    email: req.body.email,
-    anniversaire: req.body.anniversaire,
-    motDePasse: req.body.motDePasse
+    ...req.body 
   }
-  userModel.create(userInfos)
+  usersModel.create(userInfos)
   .then(result=>{res.status(201).json({
     message: 'User enregistré!',
     user: result

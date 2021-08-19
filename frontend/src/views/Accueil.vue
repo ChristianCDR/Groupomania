@@ -4,7 +4,7 @@
     </p>
     <div class="post">
       <div class="textPost">
-        <button type="button" @click="driveToPostPage">Partagez ce que vous pensez...</button>
+        <button type="button" @click="driveToTextPost">Partagez ce que vous pensez...</button>
       </div>
       <div class="imagePost">
         <button type="button" @click="driveToPostPage">Partagez vos plus belles photos...</button>
@@ -21,6 +21,9 @@
     methods:{
       driveToPostPage: function(){
         this.$router.push('/post');
+      }, 
+      driveToTextPost: function(){
+        this.$router.push('/textPost');
       }
     }
   }
@@ -99,7 +102,7 @@
     p span{
       display:block;
       width: 65vw;
-      margin: auto;
+      margin: auto;  
     }
   }
-</style>
+</style> 

@@ -31,6 +31,31 @@ export default createStore({
           reject(error);
         });
       })
+    },
+
+    publier: ({commit}, postContent)=>{
+      return new Promise((resolve, reject)=>{
+        commit;
+        axios.post('http://localhost:3000/post/', postContent)
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
+    },
+    textPost: ({commit})=>{
+      return new Promise((resolve, reject)=>{
+        commit;
+        axios.get('http://localhost:3000/post/')
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
     }
   },
   modules: {

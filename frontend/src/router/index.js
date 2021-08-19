@@ -18,7 +18,7 @@ const routes = [
   {
     path: '/auth',
     name: 'auth',
-    component: () => import(/* webpackChunkName: "accueil" */ '../views/LoginOrSignUp.vue')
+    component: () => import(/* webpackChunkName: "accueil" */ '../views/Auth.vue')
   },
   {
     path: '/accueil',
@@ -29,6 +29,11 @@ const routes = [
     path: '/post',
     name: 'post',
     component: () => import(/* webpackChunkName: "accueil" */ '../views/Post.vue')
+  },
+  {
+    path: '/textPost',
+    name: 'textPost',
+    component: () => import(/* webpackChunkName: "accueil" */ '../views/TextPost.vue')
   }
 ]
 

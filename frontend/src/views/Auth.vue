@@ -29,7 +29,6 @@
   export default {
     name: 'login',
     components: {
-      /*pageHeader*/
     },
     data: function(){
       return{

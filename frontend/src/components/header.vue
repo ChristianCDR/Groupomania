@@ -1,17 +1,22 @@
 <template>
-  <div class="header">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-    <router-link to="/auth/login">login</router-link>
-    <router-link to="/auth/signup">signup</router-link>
-  </div>
+  <header>
+   
+  </header>
 </template>
 
 <script>
 
 export default {
-  name: 'header',
+  name: 'pageHeader',
   components: {
   }
 }
 </script>
+<style>
+  header{
+    height: 100px;
+    border: 2px solid black;
+    position: relative;
+  }
+
+</style>

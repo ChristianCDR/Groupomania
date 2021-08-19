@@ -1,3 +1,3 @@
 <template>
-  <p></p>
+  <p>Je suis le home</p>
 </template>

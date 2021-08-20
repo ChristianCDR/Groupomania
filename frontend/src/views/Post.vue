@@ -3,7 +3,9 @@
     <form>
       <textarea class="description" v-model="description" placeholder="Partagez vos idées">
       </textarea>
-      <button type="submit" @click="publier" > Publier </button>
+      <button type="submit" @click="publier" v-if="post" > Publier </button>
+      <button type="submit" @click="updatePost" v-else>Enregistrer la modification </button>
+
     </form>
   </body>
 </template>
@@ -28,6 +30,15 @@
           .catch((error)=>{
             console.log(error);
           })
+      },
+      updatePost:function(){
+        this.$store.dispatch('updatePost')
+        .then(response =>{
+          console.log(response)
+        })
+        .catch(error =>{
+          console.log(error)
+        });
       }
     }
   }

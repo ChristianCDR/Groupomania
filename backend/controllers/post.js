@@ -22,9 +22,6 @@ exports.getAllPosts=(req, res, next)=>{
   })})
   .catch(error=>{res.status(500).json({ErrorOnGetAll: error})});
 }
-exports.getOnePost=(req, res, next) =>{
-
-}
 exports.modifyPost=(req, res, next) => {
   const postObject= req.file ? {
     ...JSON.parse(req.body.post),

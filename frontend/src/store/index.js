@@ -3,8 +3,12 @@ const axios = require('axios');
 
 export default createStore({
   state: {
+    PostOrUpdateMode: 'post'
   },
   mutations: {
+    switchToUpdate: function(state){
+      state.PostOrUpdateMode= 'update'
+    }
   },
   actions: {
     logUserIn:({commit}, userInfos)=>{
@@ -56,8 +60,21 @@ export default createStore({
           reject(error);
         });
       })
+    },
+    updatePost:({commit})=>{
+      return new Promise((resolve,reject)=>{
+        commit;
+        axios.put('http://localhost:3000/post/')
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
     }
   },
-  modules: {
+  modules:{
+
   }
 })

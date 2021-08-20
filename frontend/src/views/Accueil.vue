@@ -20,7 +20,7 @@
     },
     methods:{
       driveToPostPage: function(){
-        this.$router.push('/post');
+        this.$router.push('/imagePost');
       }, 
       driveToTextPost: function(){
         this.$router.push('/textPost');

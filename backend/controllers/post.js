@@ -27,7 +27,7 @@ exports.getOnePost=(req, res, next) =>{
 }
 exports.modifyPost=(req, res, next) => {
   const postObject= req.file ? {
-    ...JSON.parse(req.body.sauce),
+    ...JSON.parse(req.body.post),
    // imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   }:{...req.body};
 

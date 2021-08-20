@@ -18,7 +18,7 @@ const routes = [
   {
     path: '/auth',
     name: 'auth',
-    component: () => import(/* webpackChunkName: "accueil" */ '../views/Auth.vue')
+    component: () => import(/* webpackChunkName: "auth" */ '../views/Auth.vue')
   },
   {
     path: '/accueil',
@@ -28,12 +28,17 @@ const routes = [
   {
     path: '/post',
     name: 'post',
-    component: () => import(/* webpackChunkName: "accueil" */ '../views/Post.vue')
+    component: () => import(/* webpackChunkName: "post" */ '../views/Post.vue')
   },
   {
     path: '/textPost',
     name: 'textPost',
-    component: () => import(/* webpackChunkName: "accueil" */ '../views/TextPost.vue')
+    component: () => import(/* webpackChunkName: "textPost" */ '../views/TextPost.vue')
+  },
+  {
+    path: '/imagePost',
+    name: 'imagePost',
+    component: () => import(/* webpackChunkName: "imagePost" */ '../views/ImagePost.vue')
   }
 ]
 

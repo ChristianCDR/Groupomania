@@ -17,6 +17,13 @@
 </script>
 <style scoped>
   main{
-    height:500px;
+    height: 700px;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    width: 65%;
+    margin: 0 auto;
   }
+  /*main button{
+    margin: 15px;
+  }*/
 </style>

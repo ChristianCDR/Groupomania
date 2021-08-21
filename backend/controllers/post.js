@@ -29,9 +29,9 @@ exports.modifyPost=(req, res, next) => {
   }:{...req.body};
 
   postModel.update(postObject, {where:{ id: req.params.id }})
-  .then((result) => res.status(200).json({ 
+  .then(() => res.status(200).json({ 
     message: 'Post modifié!',
-    post: result
+    post: postObject
   }))
   .catch(error => res.status(400).json({ error }));
 };

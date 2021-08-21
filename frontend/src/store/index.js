@@ -3,11 +3,13 @@ const axios = require('axios');
 
 export default createStore({
   state: {
-    PostOrUpdateMode: 'post'
+    postOrUpdateMode: 'post',
+    id:''
   },
   mutations: {
-    switchToUpdate: function(state){
-      state.PostOrUpdateMode= 'update'
+    switchToUpdate: function(state, idRecup){
+      state.postOrUpdateMode= 'update';
+      state.id=idRecup.postId;
     }
   },
   actions: {
@@ -61,10 +63,11 @@ export default createStore({
         });
       })
     },
-    updatePost:({commit})=>{
+    updatePost:({commit},postContent)=>{
       return new Promise((resolve,reject)=>{
         commit;
-        axios.put('http://localhost:3000/post/')
+        console.log(postContent);
+        axios.put(`http://localhost:3000/post/${postContent.id}`,postContent)
         .then(function (response) {
           resolve(response);
         })

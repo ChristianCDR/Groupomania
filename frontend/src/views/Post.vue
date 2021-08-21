@@ -32,7 +32,10 @@
           })
       },
       updatePost:function(){
-        this.$store.dispatch('updatePost')
+        this.$store.dispatch('updatePost',{
+          description: this.description,
+          id: this.$store.state.id
+        })
         .then(response =>{
           console.log(response)
         })

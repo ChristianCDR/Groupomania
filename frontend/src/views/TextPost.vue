@@ -6,9 +6,9 @@
     <div class="publications" v-for="post in posts" :key="post.description">
       <div>
       {{ post.description }} <br>
-      <span>par User le {{post.updatedAt}}</span>
-      <button @click="updatePost">Mettre à jour</button>
-      <button @click="deletePost">Supprimer</button>
+      <span>par un User le {{post.updatedAt}}</span>
+      <button @click="updatePost(post.id)" >Mettre à jour</button>
+      <button @click="deletePost(post.id)">Supprimer</button>
       </div>
     </div>
   </main>
@@ -60,12 +60,12 @@
       driveToPostPage: function(){
         this.$router.push('/post');
       },
-      updatePost:function(){
-        store.commit('switchToUpdate');
+      updatePost:function(id){
+        store.commit('switchToUpdate',{postId:id});
         this.driveToPostPage();
       },
-      deletePost:function(){
-
+      deletePost:function(event){
+        event;
       }
     },
     mounted(){

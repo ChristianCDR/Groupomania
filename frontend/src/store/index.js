@@ -3,13 +3,19 @@ const axios = require('axios');
 
 export default createStore({
   state: {
-    postOrUpdateMode: 'post',
-    id:''
+    postOrUpdateMode: "",
+    id:"",
+    containsImage: false
   },
   mutations: {
-    switchToUpdate: function(state, idRecup){
-      state.postOrUpdateMode= 'update';
+    setId: function(state, idRecup){
       state.id=idRecup.postId;
+    },
+    image: function(state){
+     state.containsImage= true;
+    },
+    noImage: function(state){
+      state.containsImage= false;
     }
   },
   actions: {
@@ -41,6 +47,7 @@ export default createStore({
 
     publier: ({commit}, postContent)=>{
       return new Promise((resolve, reject)=>{
+        console.log(postContent);
         commit;
         axios.post('http://localhost:3000/post/', postContent)
         .then(function (response) {
@@ -66,7 +73,6 @@ export default createStore({
     updatePost:({commit},postContent)=>{
       return new Promise((resolve,reject)=>{
         commit;
-        console.log(postContent);
         axios.put(`http://localhost:3000/post/${postContent.id}`,postContent)
         .then(function (response) {
           resolve(response);
@@ -75,9 +81,18 @@ export default createStore({
           reject(error);
         });
       })
+    },
+    deletePost:({commit}, postToDeleteId)=>{
+      return new Promise((resolve,reject)=>{
+        commit;
+        axios.delete(`http://localhost:3000/post/${postToDeleteId.postId}`)
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
     }
-  },
-  modules:{
-
   }
 })

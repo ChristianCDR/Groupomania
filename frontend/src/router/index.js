@@ -39,6 +39,11 @@ const routes = [
     path: '/imagePost',
     name: 'imagePost',
     component: () => import(/* webpackChunkName: "imagePost" */ '../views/ImagePost.vue')
+  },
+  {
+    path: '/update',
+    name: 'update',
+    component: () => import(/* webpackChunkName: "update" */ '../views/Update.vue') 
   }
 ]
 

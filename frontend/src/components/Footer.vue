@@ -10,4 +10,7 @@
     background-color: #ffd7d7;
     border:2px solid black;
   }
+  footer svg{
+    margin: 0;
+  }
 </style>

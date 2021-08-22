@@ -2,12 +2,12 @@
   
   <pageHeader/>
   <main>
-    <button @click="driveToPostPage"> Publier vos idées </button>
+    <button @click="driveToPostPage" > Publier vos idées </button>
     <div class="publications" v-for="post in posts" :key="post.description">
       <div>
       {{ post.description }} <br>
       <span>par un User le {{post.updatedAt}}</span>
-      <button @click="updatePost(post.id)" >Mettre à jour</button>
+      <button @click="updatePost(post.id)">Mettre à jour</button>
       <button @click="deletePost(post.id)">Supprimer</button>
       </div>
     </div>
@@ -26,6 +26,14 @@
   }
   main button{
     margin: 15px;
+  }
+  button:active{
+    border: 2px solid #ffd7d7;
+  }
+  button{
+    width: 10em;
+    background-color:#4a4e6e; 
+    color: white;
   }
   .publications{
     border: 2px solid black;
@@ -58,14 +66,22 @@
     },
     methods:{
       driveToPostPage: function(){
+        store.commit('noImage');
         this.$router.push('/post');
       },
       updatePost:function(id){
-        store.commit('switchToUpdate',{postId:id});
-        this.driveToPostPage();
+        store.commit('setId',{postId:id});
+        this.$router.push('/update');
       },
-      deletePost:function(event){
-        event;
+      deletePost:function(id){
+        this.$store.dispatch('deletePost',{postId: id})
+        .then(response =>{
+          console.log(response)
+          this.$router.push('/textPost');
+        })
+        .catch(error =>{
+          console.log(error)
+        });
       }
     },
     mounted(){

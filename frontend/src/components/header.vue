@@ -19,7 +19,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
   header, header div{
     display:flex;
     justify-content: space-around;

@@ -1,16 +1,18 @@
 <template>
   <body>
     <pageHeader/>
-    <form method="POST" action="http://localhost:3000/post/" enctype="multipart/form-data">
-     
-      <input type='file' accept='image/*' @change='openFile' v-if="$store.state.containsImage" id="inputFile" name="inputFile" ><br>
-      
-      <img id='output' :src="imageUrl" height="150" v-if="$store.state.containsImage">
-      <textarea class="description" name="description" v-model="description" placeholder="Partagez vos idées">
+    <form method="POST" action="http://localhost:3000/post/" enctype="multipart/form-data" v-if="$store.state.containsImage">
+      <input type='file' accept='image/*' @change='openFile' id="inputFile" name="inputFile" >
+      <br>
+      <img id='output' :src="imageUrl" height="150">
+      <textarea class="description" name="description" placeholder="Commentez votre photo">
       </textarea>
-      
-      <button type="submit" v-if="$store.state.containsImage">Publier votre photo</button>
-      <button type="submit" @click="publier" v-else> Publier </button>
+      <button type="submit" @click="publier">Publier votre photo</button>
+    </form>
+    <form  v-else>  
+      <textarea class="description" v-model="textToPublish" placeholder="Partagez vos idées">
+      </textarea>
+      <button type="submit" @click="publishText"> Publier votre texte</button>
     </form>
     <pageFooter/>
     <PostUpdateStyle/>
@@ -20,8 +22,7 @@
   import pageHeader from "@/components/Header";
   import pageFooter from "@/components/Footer";
   import postUpdateStyle from "@/components/PostUpdateStyle";
-  //import axios from "axios";
-  //const fs = require('fs');
+
   export default{
     name:'post',
     components:{
@@ -32,6 +33,7 @@
     data: function(){
       return{
         description: "",
+        textToPublish:"",
         imageUrl:"",
         image: null,
         formData: null
@@ -47,7 +49,18 @@
             console.log(error);
           })
       },
-      
+
+      publishText: function(){
+        this.$store.dispatch('publishText', {
+          textToPublish: this.textToPublish
+          })
+        .then((response) => { 
+           console.log(response);
+          })
+          .catch((error)=>{
+            console.log(error);
+          })
+      },
       openFile: function(event) { 
         const files = event.target.files;
         let filename = files[0].name;

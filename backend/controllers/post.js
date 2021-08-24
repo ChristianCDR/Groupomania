@@ -3,10 +3,10 @@ const postModel= posts.post;
 const fs=require('fs');
 
 exports.createNewPost=(req, res)=>{
-  const newPost= {
+  const newPost= req.file ? {
     ...req.body,
     imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-  };   
+  }:{ ...req.body }
   postModel.create(newPost)
   .then(result=>{res.status(201).json({
     message: 'Post enregistré!',

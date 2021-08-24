@@ -16,6 +16,7 @@ export default {
 </script>
 
 <style>
+ 
   body{
     margin:0;
   }
@@ -35,8 +36,6 @@ export default {
     border-radius: 15px;
     display:flex;
     flex-direction: column;
-    justify-content:;
-    backgroung-color: red;
   }
   .form-2 {
     height: 500px;

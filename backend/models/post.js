@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
   };
   post.init({
     imageUrl: DataTypes.STRING,
-    description: DataTypes.STRING
+    description: DataTypes.STRING,
+    textToPublish: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'post',

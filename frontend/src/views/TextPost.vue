@@ -77,7 +77,7 @@
         this.$store.dispatch('deletePost',{postId: id})
         .then(response =>{
           console.log(response)
-          this.$router.push('/textPost');
+          window.location.reload();
         })
         .catch(error =>{
           console.log(error)

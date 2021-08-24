@@ -87,6 +87,7 @@
           motDePasse:this.motDePasse
         }).then((response) => {
             console.log(response)
+            this.logUserIn();
           })
           .catch((error)=>{
             console.log(error);

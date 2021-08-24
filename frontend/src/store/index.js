@@ -47,7 +47,6 @@ export default createStore({
 
     publier: ({commit}, postContent)=>{
       return new Promise((resolve, reject)=>{
-        console.log(postContent);
         commit;
         axios.post('http://localhost:3000/post/', postContent)
         .then(function (response) {

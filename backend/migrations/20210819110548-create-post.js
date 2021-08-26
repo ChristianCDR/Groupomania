@@ -14,9 +14,12 @@ module.exports = {
       },
       description: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
-      
+      textToPublish:{
+        type: Sequelize.STRING,
+        allowNull: true
+      },      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

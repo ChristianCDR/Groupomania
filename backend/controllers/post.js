@@ -3,16 +3,16 @@ const postModel= posts.post;
 const fs=require('fs');
 
 exports.createNewPost=(req, res)=>{
-  const newPost= {
+  const newPost= req.file ? {
     ...req.body,
-    imageUrl:`${req.protocol}://${req.get('host')}/images/${req.body.image.name}`
-  };   
+    imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+  }:{ ...req.body }
   postModel.create(newPost)
   .then(result=>{res.status(201).json({
     message: 'Post enregistré!',
-    post: result ,
-    stuff: req.body.image.name
-  })})
+    post: result
+  })
+})
   .catch(error=>{res.status(500).json({ErrorOnPostCreation: error})});
 }
 
@@ -24,24 +24,58 @@ exports.getAllPosts=(req, res)=>{
   })})
   .catch(error=>{res.status(500).json({ErrorOnGetAll: error})});
 }
+
 exports.modifyPost=(req, res) => {
   const postObject= req.file ? {
-    ...JSON.parse(req.body.post),
-    imageUrl:`${req.protocol}://${req.get('host')}/images/${req.body.image.filename}`
+    ...req.body,
+    imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   }:{...req.body};
 
-  postModel.update(postObject, {where:{ id: req.params.id }})
-  .then(() => res.status(200).json({ 
-    message: 'Post modifié!',
-    post: postObject
-  }))
-  .catch(error => res.status(500).json({ErrorOnUpdate: error }));
+  postModel.findByPk(req.params.id)
+  .then((thePost)=>{
+    if(thePost.imageUrl){
+      const filename= thePost.imageUrl.split('/images/')[1];
+        fs.unlink(`images/${filename}`,()=>{
+          postModel.update(postObject, {where:{ id: req.params.id }})
+          .then(() => res.status(200).json({ 
+            message: 'Post modifié!',
+            post: postObject
+          }))
+          .catch(error => res.status(500).json({ErrorOnUpdate: error }));
+        })
+    }
+    else{
+      postModel.update(postObject, {where:{ id: req.params.id }})
+      .then(() => res.status(200).json({ 
+        message: 'Post modifié!',
+        post: postObject
+      }))
+      .catch(error => res.status(500).json({ErrorOnUpdate: error }));
+    }
+  })
+  .catch(error => res.status(500).json({ error }));
 };
 
 exports.deletePost=(req, res) => {
-  postModel.destroy({where:{id: req.params.id}})
-  .then(() => res.status(200).json({ 
-    message: 'Post supprimé!',
-  }))
-  .catch(error => res.status(500).json({ErrorOnDelete: error }));
+  postModel.findByPk(req.params.id)
+  .then((thePost)=>{
+    if(thePost.imageUrl==null){
+      postModel.destroy({where:{id: req.params.id}})
+      .then(() => res.status(200).json({ 
+        message: 'Post supprimé!',
+      }))
+      .catch(error => res.status(500).json({ErrorOnDelete: error }));
+    }
+    else{
+      const filename= thePost.imageUrl.split('/images/')[1];
+      fs.unlink(`images/${filename}`,()=>{
+        postModel.destroy({where:{id: req.params.id}})
+        .then(() => res.status(200).json({ 
+          message: 'Post supprimé!',
+        }))
+        .catch(error => res.status(500).json({ErrorOnDelete: error }));
+      })
+    } 
+  })
+  .catch(error => res.status(500).json({ error }));  
 }

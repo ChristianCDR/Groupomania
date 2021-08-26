@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
 const axios = require('axios');
 
 export default createStore({
@@ -47,7 +47,18 @@ export default createStore({
 
     publier: ({commit}, postContent)=>{
       return new Promise((resolve, reject)=>{
-        console.log(postContent);
+        commit;
+        axios.post('http://localhost:3000/post/', postContent.formData)
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
+    },
+    publishText: ({commit}, postContent)=>{
+      return new Promise((resolve, reject)=>{
         commit;
         axios.post('http://localhost:3000/post/', postContent)
         .then(function (response) {
@@ -70,7 +81,31 @@ export default createStore({
         });
       })
     },
-    updatePost:({commit},postContent)=>{
+    imagePost: ({commit})=>{
+      return new Promise((resolve, reject)=>{
+        commit;
+        axios.get('http://localhost:3000/post/')
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
+    },
+    updateImagePost:({commit},postContent)=>{
+      return new Promise((resolve,reject)=>{
+        commit;
+        axios.put(`http://localhost:3000/post/${postContent.id}`,postContent.formData)
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
+    },
+    updateTextPost:({commit},postContent)=>{
       return new Promise((resolve,reject)=>{
         commit;
         axios.put(`http://localhost:3000/post/${postContent.id}`,postContent)

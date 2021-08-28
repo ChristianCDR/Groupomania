@@ -36,18 +36,21 @@
         imageUrl:"",
         description: "",
         image: null,
-        formData: null
+        formData:"",
+        userId:""
       }
     },
     methods:{
       publier: function(){     
-
         const formData = new FormData();
         formData.append("description", this.description);
         formData.append("inputFile", this.image);
-        this.formData= formData;
+        this.formData = formData;
 
-        this.$store.dispatch('publier',{formData:this.formData})
+        const userId = JSON.parse(localStorage.getItem("datas")).userId;
+        this.userId = userId;
+    
+        this.$store.dispatch('publier', {formData, userId})
         .then((response) => { 
            console.log(response);
           })
@@ -58,15 +61,17 @@
       },
 
       publishText: function(){
+        const datas = JSON.parse(localStorage.getItem("datas"));
         this.$store.dispatch('publishText', {
-          textToPublish: this.textToPublish
+          textToPublish: this.textToPublish,
+          userId: datas.userId
           })
         .then((response) => { 
            console.log(response);
            this.$router.push('/textPost');
           })
           .catch((error)=>{
-            console.log(error);
+            console.log('errorFromPublishText:', error);
           })
       },
       openFile: function(event) { 

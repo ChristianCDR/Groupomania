@@ -37,7 +37,7 @@ exports.signup=(req,res, next)=>{
        res.status(200).json({
          userId: theUser.id,
          token: jwt.sign(
-           {userId: theUser._id},
+           {userId: theUser.id},
            process.env.TOKEN_SECRET_KEY,
            {expiresIn:'24h'}
            )

@@ -4,6 +4,9 @@ module.exports = (sequelize, DataTypes) => {
   class usersModel extends Model {
     static associate(models) {
       // define association here
+      usersModel.hasMany(models.post,{
+        onDelete:"cascade"
+      });
     }
   };
   usersModel.init({

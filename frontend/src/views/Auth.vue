@@ -26,6 +26,7 @@
 </template>
 
 <script>
+  const axios = require('axios');
   export default {
     name: 'login',
     components: {
@@ -69,7 +70,11 @@
           motDePasse:this.motDePasse
         }).then((response) => {
             console.log(response);
+            localStorage.setItem('datas', JSON.stringify(response.data));
             this.$router.push('/accueil');
+            
+            let token= JSON.parse(localStorage.getItem("datas")).token; 
+            axios.defaults.headers = {'Authorization': `Bearer ${token}`}
           })
           .catch((error)=>{
             console.log("ErrorFromLogin:",error);

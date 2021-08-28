@@ -19,7 +19,15 @@ module.exports = {
       textToPublish:{
         type: Sequelize.STRING,
         allowNull: true
-      },      
+      }, 
+      userId:{
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
+      },     
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

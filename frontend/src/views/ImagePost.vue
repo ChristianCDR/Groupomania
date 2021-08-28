@@ -8,8 +8,8 @@
         <div class="photoDesc">
         {{ post.description }} <br>
         <span>par un User le {{post.updatedAt}}</span>
-        <button @click="updatePost(post.id)">Mettre à jour</button>
-        <button @click="deletePost(post.id)">Supprimer</button>
+        <button @click="updatePost(post.id)" v-show="post.userId==this.loggedUserId">Mettre à jour</button>
+        <button @click="deletePost(post.id)" v-show="post.userId==this.loggedUserId">Supprimer</button>
         </div>
       </div>
     </div>
@@ -32,7 +32,8 @@
     },
     data: function(){
       return{
-        posts:""
+        posts:"",
+        loggedUserId:''
       } 
     },
     methods:{
@@ -64,6 +65,7 @@
           }
         }
         this.posts= textImageTab;
+        this.loggedUserId= JSON.parse(localStorage.getItem("datas")).userId;
       })
       .catch((error)=>{
         console.log(error);

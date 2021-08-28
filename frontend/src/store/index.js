@@ -48,7 +48,7 @@ export default createStore({
     publier: ({commit}, postContent)=>{
       return new Promise((resolve, reject)=>{
         commit;
-        axios.post('http://localhost:3000/post/', postContent.formData)
+        axios.post('http://localhost:3000/post/', postContent)
         .then(function (response) {
           resolve(response);
         })

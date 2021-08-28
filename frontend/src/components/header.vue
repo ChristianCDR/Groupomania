@@ -6,7 +6,7 @@
       <span>Evenements</span>
       <label for='search'></label>
       <input id='search' placeholder=" Rechercher une personne"/>
-      <button> Se déconnecter</button>
+      <button> Supprimer le compte </button>
     </div>
   </header>
 </template>

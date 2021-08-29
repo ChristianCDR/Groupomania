@@ -62,7 +62,7 @@ exports.deletePost=(req, res) => {
     if(thePost.imageUrl==null){
       postModel.destroy({where:{id: req.params.id}})
       .then(() => res.status(200).json({ 
-        message: 'Post supprimé!',
+        message: 'Post supprimé!'
       }))
       .catch(error => res.status(500).json({ErrorOnDelete: error }));
     }

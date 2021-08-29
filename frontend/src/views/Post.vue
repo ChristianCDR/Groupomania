@@ -1,8 +1,8 @@
 <template>
   <body>
     <pageHeader/>
-    <form enctype="multipart/form-data" @submit.prevent="publier" v-if="$store.state.containsImage">
-      <input type='file' accept='image/*' @change='openFile' id="inputFile" name="inputFile" >
+    <form @submit.prevent="publier" v-if="$store.state.containsImage">
+      <input type='file' accept='image/*' @change='openFile' id="inputFile" ref="inputFile" >
       <br>
       <img id='output' :src="imageUrl" height="150">
       <textarea class="description" v-model="description" placeholder="Commentez votre photo">
@@ -22,7 +22,7 @@
   import pageHeader from "@/components/Header";
   import pageFooter from "@/components/Footer";
   import postUpdateStyle from "@/components/PostUpdateStyle";
-
+  
   export default{
     name:'post',
     components:{
@@ -35,22 +35,21 @@
         textToPublish:"",
         imageUrl:"",
         description: "",
-        image: null,
-        formData:"",
+        image: "",
         userId:""
       }
     },
     methods:{
-      publier: function(){     
-        const formData = new FormData();
-        formData.append("description", this.description);
-        formData.append("inputFile", this.image);
-        this.formData = formData;
-
+      publier: function(){   
         const userId = JSON.parse(localStorage.getItem("datas")).userId;
-        this.userId = userId;
-    
-        this.$store.dispatch('publier', {formData, userId})
+        this.userId  = userId;
+
+        let formData = new FormData();
+        formData.append('inputFile', this.image);
+        formData.append('description', this.description);
+        formData.append('userId', this.userId);
+     
+        this.$store.dispatch('publier', formData)
         .then((response) => { 
            console.log(response);
           })

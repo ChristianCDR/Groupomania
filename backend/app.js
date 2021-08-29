@@ -17,7 +17,6 @@ connection.connect(function(err) {
     console.error('Connexion échouee!' + err.stack); 
     return;
   }
- 
   console.log('Connexion au serveur réussie avec id:' + connection.threadId);
 });
 

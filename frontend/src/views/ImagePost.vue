@@ -63,7 +63,7 @@
           if(post.imageUrl){
             textImageTab.unshift(post)
           }
-        }
+        } 
         this.posts= textImageTab;
         this.loggedUserId= JSON.parse(localStorage.getItem("datas")).userId;
       })

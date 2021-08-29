@@ -5,7 +5,8 @@ export default createStore({
   state: {
     postOrUpdateMode: "",
     id:"",
-    containsImage: false
+    containsImage: false,
+    file:""
   },
   mutations: {
     setId: function(state, idRecup){
@@ -16,6 +17,9 @@ export default createStore({
     },
     noImage: function(state){
       state.containsImage= false;
+    },
+    setFile: function(state, file){
+      state.file= file;
     }
   },
   actions: {
@@ -45,10 +49,18 @@ export default createStore({
       })
     },
 
-    publier: ({commit}, postContent)=>{
+    publier: ({commit}, formData)=>{
       return new Promise((resolve, reject)=>{
         commit;
-        axios.post('http://localhost:3000/post/', postContent)
+        
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.post('http://localhost:3000/post/',
+          formData,{
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`
+          }
+        })
         .then(function (response) {
           resolve(response);
         })
@@ -60,6 +72,9 @@ export default createStore({
     publishText: ({commit}, postContent)=>{
       return new Promise((resolve, reject)=>{
         commit;
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.defaults.headers = {'Authorization': `Bearer ${token}`};
+
         axios.post('http://localhost:3000/post/', postContent)
         .then(function (response) {
           resolve(response);
@@ -72,6 +87,9 @@ export default createStore({
     textPost: ({commit})=>{
       return new Promise((resolve, reject)=>{
         commit;
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.defaults.headers = {'Authorization': `Bearer ${token}`};
+
         axios.get('http://localhost:3000/post/')
         .then(function (response) {
           resolve(response);
@@ -84,6 +102,9 @@ export default createStore({
     imagePost: ({commit})=>{
       return new Promise((resolve, reject)=>{
         commit;
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.defaults.headers = {'Authorization': `Bearer ${token}`};
+
         axios.get('http://localhost:3000/post/')
         .then(function (response) {
           resolve(response);
@@ -96,6 +117,9 @@ export default createStore({
     updateImagePost:({commit},postContent)=>{
       return new Promise((resolve,reject)=>{
         commit;
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.defaults.headers = {'Authorization': `Bearer ${token}`};
+
         axios.put(`http://localhost:3000/post/${postContent.id}`,postContent.formData)
         .then(function (response) {
           resolve(response);
@@ -108,6 +132,9 @@ export default createStore({
     updateTextPost:({commit},postContent)=>{
       return new Promise((resolve,reject)=>{
         commit;
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.defaults.headers = {'Authorization': `Bearer ${token}`};
+
         axios.put(`http://localhost:3000/post/${postContent.id}`,postContent)
         .then(function (response) {
           resolve(response);
@@ -120,7 +147,25 @@ export default createStore({
     deletePost:({commit}, postToDeleteId)=>{
       return new Promise((resolve,reject)=>{
         commit;
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.defaults.headers = {'Authorization': `Bearer ${token}`};
+
         axios.delete(`http://localhost:3000/post/${postToDeleteId.postId}`)
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
+    },
+    deleteUser:({commit}, userToDeleteId)=>{
+      return new Promise((resolve,reject)=>{
+        commit;
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.defaults.headers = {'Authorization': `Bearer ${token}`};
+        
+        axios.delete(`http://localhost:3000/auth/${userToDeleteId.user}`)
         .then(function (response) {
           resolve(response);
         })

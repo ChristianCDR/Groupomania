@@ -6,6 +6,7 @@ const ctrlUser= require('../controllers/user.js');
 
  route.post('/signup', ctrlUser.signup);
  route.post('/login', ctrlUser.login); 
+ route.delete('/:id', ctrlUser.deleteUser);
 
  module.exports= route; 
 //ctrlEmail.emailValidator, ctrlPass.passwordValidator, 

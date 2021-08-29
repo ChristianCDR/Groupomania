@@ -6,7 +6,7 @@
       <span>Evenements</span>
       <label for='search'></label>
       <input id='search' placeholder=" Rechercher une personne"/>
-      <button> Supprimer le compte </button>
+      <button type="submit" @click="deconnexion"> Déconnexion </button>
     </div>
   </header>
 </template>
@@ -15,7 +15,11 @@
 
 export default {
   name: 'pageHeader',
-  components: {
+  methods:{
+      deconnexion: function(){
+      localStorage.removeItem('datas');
+      this.$router.push('/auth');
+    }
   }
 }
 </script>

@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey:{
           allowNull:false
         }
-      })
+      }),
+      post.hasMany(models.commentaires);
     }
   };
   post.init({

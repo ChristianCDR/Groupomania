@@ -9,10 +9,15 @@
       </textarea>
       <button type="submit">Publier votre photo</button>
     </form>
-    <form  v-else>  
+    <form v-if="$store.state.commentaire==false">  
       <textarea class="description" v-model="textToPublish" placeholder="Partagez vos idées">
       </textarea>
       <button type="submit" @click="publishText"> Publier votre texte</button>
+    </form>
+    <form  v-if="$store.state.commentaire">  
+      <textarea class="description" v-model="commentaire" placeholder="Commenter ce post">
+      </textarea>
+      <button type="submit" @click="commenter"> Commenter </button>
     </form>
     <pageFooter/>
     <PostUpdateStyle/>
@@ -36,7 +41,8 @@
         imageUrl:"",
         description: "",
         image: "",
-        userId:""
+        userId:"",
+        commentaire:""
       }
     },
     methods:{
@@ -71,6 +77,22 @@
           })
           .catch((error)=>{
             console.log('errorFromPublishText:', error);
+          })
+      },
+      commenter: function(){
+        const datas = JSON.parse(localStorage.getItem("datas"));
+        const postId = this.$store.state.postToCommentId;
+
+        this.$store.dispatch('commenter', {
+          commentaire: this.commentaire,
+          userId: datas.userId,
+          postId: postId
+          })
+        .then((response) => { 
+           console.log(response);
+          })
+          .catch((error)=>{
+            console.log('errorFromCommentaire:', error);
           })
       },
       openFile: function(event) { 

@@ -6,7 +6,9 @@ export default createStore({
     postOrUpdateMode: "",
     id:"",
     containsImage: false,
-    file:""
+    file:"",
+    commentaire: false,
+    postToCommentId:""
   },
   mutations: {
     setId: function(state, idRecup){
@@ -20,6 +22,10 @@ export default createStore({
     },
     setFile: function(state, file){
       state.file= file;
+    },
+    comments: function(state, postToComment){
+      state.commentaire = postToComment.commentaire;
+      state.postToCommentId = postToComment.postId;
     }
   },
   actions: {
@@ -84,6 +90,22 @@ export default createStore({
         });
       })
     },
+    commenter: ({commit, state}, postContent)=>{
+      return new Promise((resolve, reject)=>{
+        commit;
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.defaults.headers = {'Authorization': `Bearer ${token}`};
+
+        axios.post(`http://localhost:3000/post/${state.postToCommentId}`, postContent)
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
+    },
+
     textPost: ({commit})=>{
       return new Promise((resolve, reject)=>{
         commit;
@@ -106,6 +128,21 @@ export default createStore({
         axios.defaults.headers = {'Authorization': `Bearer ${token}`};
 
         axios.get('http://localhost:3000/post/')
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
+    },
+    getComments: ({commit}, post)=>{
+      return new Promise((resolve, reject)=>{
+        commit;
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.defaults.headers = {'Authorization': `Bearer ${token}`};
+
+        axios.get(`http://localhost:3000/post/${post.postId}`)
         .then(function (response) {
           resolve(response);
         })

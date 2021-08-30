@@ -5,14 +5,14 @@
       <input type='file' accept='image/*' @change='openFile' id="inputFile" name="inputFile" >
       <br>
       <img id='output' :src="imageUrl" height="150">
-      <textarea class="description" v-model="description" placeholder="Commentez votre photo">
+      <textarea class="description" v-model="description" placeholder="Description">
       </textarea>
-      <button type="submit">Publier votre photo</button>
+      <button type="submit">Modifier</button>
     </form>
     <form  v-else>  
-      <textarea class="description" v-model="textToPublish" placeholder="Partagez vos idées">
+      <textarea class="description" v-model="textToPublish" placeholder="Modifier ce post">
       </textarea>
-      <button type="submit" @click="updateTextPost"> Publier votre texte</button>
+      <button type="submit" @click="updateTextPost"> Modifier </button>
     </form>
 
   <pageFooter/>

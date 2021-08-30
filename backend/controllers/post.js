@@ -4,7 +4,7 @@ const fs=require('fs');
 
 exports.createNewPost=(req, res)=>{
   const newPost= req.file ? {
-    ...req.body,
+    ...req.body,   
     imageUrl:`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   }:{ ...req.body }
   postModel.create(newPost)
@@ -15,7 +15,6 @@ exports.createNewPost=(req, res)=>{
 })
   .catch(error=>{res.status(500).json({ErrorOnPostCreation: error})});
 }
-
 exports.getAllPosts=(req, res)=>{
   postModel.findAll()
   .then(result=>{res.status(200).json({

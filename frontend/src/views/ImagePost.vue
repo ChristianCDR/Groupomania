@@ -6,11 +6,20 @@
       <div class="pub">
         <img :src='post.imageUrl' alt="Photo publiée">
         <div class="photoDesc">
-        {{ post.description }} <br>
-        <span>par un User le {{post.updatedAt}}</span>
-        <button @click="updatePost(post.id)" v-show="post.userId==this.loggedUserId">Mettre à jour</button>
-        <button @click="deletePost(post.id)" v-show="post.userId==this.loggedUserId">Supprimer</button>
+          {{ post.description }} <br>
+          <span>par un User le {{post.updatedAt}}</span>
+          <div>
+            <button @click="updatePost(post.id)" v-show="post.userId==this.loggedUserId">Mettre à jour</button>
+            <button @click="deletePost(post.id)" v-show="post.userId==this.loggedUserId || isAdmin== 'true' ">Supprimer</button>
+            <button type="submit" @click="commenter(post.id)"> Commenter </button>
+            <button type="submit" @click="getComments(post.id)">Commentaires</button>
+          </div>
         </div>
+      </div>
+      <div class="comments" v-show="showComments && onePostComments==post.id" v-for="comment in comments" :key="comment.commentaire">
+        <div class="singleComment">
+          {{comment.commentaire}}
+        </div>  <br>
       </div>
     </div>
   </main>
@@ -33,11 +42,16 @@
     data: function(){
       return{
         posts:"",
-        loggedUserId:''
+        loggedUserId:'',
+        showComments: false,
+        comments:"",
+        onePostComments:"",
+        isAdmin: JSON.parse(localStorage.getItem("admin"))
       } 
     },
     methods:{
       goToPostPage: function(){
+        store.commit('image');
         this.$router.push('/post');
       },     
       updatePost:function(id){
@@ -51,6 +65,25 @@
           window.location.reload();
         })
         .catch(error =>{
+          console.log(error)
+        });
+      },
+      commenter: function(id){
+        store.commit('comments',{
+          commentaire: true,
+          postId:id
+          });
+        this.$router.push('/post');
+      },
+      getComments: function(id){
+        this.showComments=true;
+        this.onePostComments=id;
+        store.dispatch('getComments',{postId: id})
+        .then(response=>{
+          console.log(response)
+          this.comments= response.data.comments;
+        })
+        .catch(error=>{
           console.log(error)
         });
       }

@@ -8,7 +8,7 @@
         {{ post.textToPublish }} <br>
         <span>par un User le {{post.updatedAt}}</span> <br>
         <button @click="updatePost(post.id)" v-show="post.userId==this.loggedUserId" >Mettre à jour</button>
-        <button @click="deletePost(post.id)" v-show="post.userId==this.loggedUserId">Supprimer</button>
+        <button @click="deletePost(post.id)" v-show="post.userId==this.loggedUserId || isAdmin== 'true' ">Supprimer</button>
         <button type="submit" @click="commenter(post.id)"> Commenter </button>
         <button type="submit" @click="getComments(post.id)">Commentaires</button>
       </div>
@@ -41,7 +41,8 @@
         loggedUserId:'',
         showComments: false,
         comments:"",
-        onePostComments:""
+        onePostComments:"",
+        isAdmin: JSON.parse(localStorage.getItem("admin"))
       }
     },
     methods:{
@@ -85,7 +86,7 @@
         });
       }
     },
-    mounted(){ 
+    mounted(){
       this.$store.dispatch('textPost')
       .then((response) => {  
         let textPostTab=[];   

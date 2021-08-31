@@ -26,6 +26,7 @@ export default createStore({
     comments: function(state, postToComment){
       state.commentaire = postToComment.commentaire;
       state.postToCommentId = postToComment.postId;
+      state.containsImage= false;
     }
   },
   actions: {

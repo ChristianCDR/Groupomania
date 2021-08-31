@@ -14,6 +14,7 @@ exports.signup=(req,res, next)=>{
       nom: req.body.nom,
       prenom: req.body.prenom,
       email: req.body.email,
+      isAdmin: req.body.isAdmin,
       motDePasse: hash
     }
     usersModel.create(userInfos)
@@ -59,7 +60,7 @@ exports.deleteUser=(req,res, next)=>{
     if(userPosts.imageUrl==null){
       postModel.destroy({where:{userId: req.params.id}})
       .then(() => res.status(200).json({ 
-        message: 'Post supprimé!'
+        message: 'User supprimé!'
       }))
       .catch(error => res.status(500).json({ErrorOnDelete: error }));
     }
@@ -68,7 +69,7 @@ exports.deleteUser=(req,res, next)=>{
       fs.unlink(`images/${filename}`,()=>{
         postModel.destroy({where:{userId: req.params.id}})
         .then(() => res.status(200).json({ 
-          message: 'Post supprimé!',
+          message: 'User supprimé!',
         }))
         .catch(error => res.status(500).json({ErrorOnDelete: error }));
       })

@@ -5,7 +5,7 @@
     </div> 
     <form class="form-1" v-if="mode=='login'">
       <h1>Connectez-vous</h1>
-      <input v-model="email" placeholder="Adresse e-mail"/>
+      <input @change="setAdmin" v-model="email" placeholder="Adresse e-mail"/>
       <input v-model="motDePasse" placeholder="Mot de passe"/>
       <button class="btn-1" type="submit" :class="{'disabled':!validatedFields}"  @click="logUserIn"> Se connecter </button>
       <p>Pas encore de compte?<a @click="signUpMode">Inscrivez-vous </a></p>    
@@ -15,7 +15,7 @@
       <h1>Inscrivez-vous</h1>
       <input v-model="nom" placeholder="Nom"/>
       <input v-model="prenom" placeholder="Prenom"/>
-      <input v-model="email" placeholder="Adresse e-mail professionnel"/>
+      <input @change="setAdmin" v-model="email" placeholder="Adresse e-mail professionnel"/>
       <input v-model="motDePasse" placeholder="Mot de passe"/>
 
       <button class="btn-2" type="submit" :class="{'disabled': !validatedFields}" @click="signUserUp"> S'incrire </button>
@@ -37,7 +37,8 @@
         nom:"",
         prenom:"",
         email:"",
-        motDePasse:""
+        motDePasse:"",
+        admin:'false'
       }
     },
     computed:{
@@ -64,6 +65,13 @@
       signUpMode: function(){
         this.mode="signup"
       },
+      setAdmin: function(event){
+        let mail=event.target.value
+        if(mail=="admin@groupomania.fr"){
+          this.admin= 'true';
+          localStorage.setItem('admin', JSON.stringify(this.admin));
+        }
+      },
       logUserIn: function(){
         this.$store.dispatch('logUserIn',{
           email: this.email,
@@ -83,7 +91,8 @@
           nom: this.nom,
           prenom:this.prenom,
           email: this.email,
-          motDePasse:this.motDePasse
+          motDePasse:this.motDePasse,
+          isAdmin: this.admin
         }).then((response) => {
             console.log(response)
             this.logUserIn();

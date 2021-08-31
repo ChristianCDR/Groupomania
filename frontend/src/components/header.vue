@@ -5,7 +5,7 @@
       <span>About</span>
       <span>Evenements</span>
       <label for='search'></label>
-      <input id='search' placeholder=" Rechercher une personne"/>
+      <input id='search' placeholder=" Rechercher "/>
       <button type="submit" @click="deconnexion"> Déconnexion </button>
     </div>
   </header>

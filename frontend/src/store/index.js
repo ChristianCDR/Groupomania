@@ -182,6 +182,21 @@ export default createStore({
         });
       })
     },
+    updateComment:({commit, state},postContent)=>{
+      return new Promise((resolve,reject)=>{
+        commit;
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.defaults.headers = {'Authorization': `Bearer ${token}`};
+
+        axios.put(`http://localhost:3000/post/comments/${state.postToCommentId}`,postContent)
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
+    },
     deletePost:({commit}, postToDeleteId)=>{
       return new Promise((resolve,reject)=>{
         commit;

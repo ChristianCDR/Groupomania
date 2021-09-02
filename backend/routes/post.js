@@ -10,6 +10,7 @@ route.post('/:id',auth, ctrlCom.commentPost);
 route.get('/',auth, ctrlPost.getAllPosts);
 route.get('/:id',auth, ctrlCom.getComments);
 route.put('/:id',auth, multer, ctrlPost.modifyPost);
+route.put('/comments/:id',auth,ctrlCom.modifyComment);
 route.delete('/:id',auth, ctrlPost.deletePost);
 
 module.exports= route;

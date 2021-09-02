@@ -1,7 +1,7 @@
 <template>
   <pageHeader/>
   
-  <form @submit.prevent="updateImagePost" enctype="multipart/form-data" v-if="$store.state.containsImage">
+    <form @submit.prevent="updateImagePost" enctype="multipart/form-data" v-if="$store.state.containsImage">
       <input type='file' accept='image/*' @change='openFile' id="inputFile" name="inputFile" >
       <br>
       <img id='output' :src="imageUrl" height="150">
@@ -9,6 +9,13 @@
       </textarea>
       <button type="submit">Modifier</button>
     </form>
+
+    <form  v-else-if="$store.state.commentaire">  
+      <textarea class="description" v-model="commentaire" placeholder="Modifier votre commentaire">
+      </textarea>
+      <button type="submit" @click="updateComment"> Modifier </button>
+    </form>
+
     <form  v-else>  
       <textarea class="description" v-model="textToPublish" placeholder="Modifier ce post">
       </textarea>
@@ -35,7 +42,8 @@
         textToPublish:"",
         imageUrl:"",
         image: null,
-        formData: null
+        formData: null,
+        commentaire:""
       }
     },
     methods:{
@@ -66,6 +74,17 @@
         .then(response =>{
           console.log(response)   
           this.$router.push('/textPost');       
+        })
+        .catch(error =>{
+          console.log(error)
+        });
+      },
+      updateComment:function(){
+        this.$store.dispatch('updateComment',{
+          commentaire: this.commentaire
+        })
+        .then(response =>{
+          console.log(response)     
         })
         .catch(error =>{
           console.log(error)

@@ -20,8 +20,8 @@
       </div>
       <div class="comments" v-show="showComments && onePostComments==post.id" v-for="comment in comments" :key="comment.commentaire">
         <div class="singleComment">
-          {{comment.commentaire}}
-        </div>  <br>
+          {{comment.commentaire}}<br>
+        </div>  
       </div>
     </div> 
   </main>
@@ -90,6 +90,13 @@
         .catch(error=>{
           console.log(error)
         });
+      },
+      updateComment: function(id){
+        store.commit('comments',{
+          commentaire: true,
+          postId:id
+          });
+        this.$router.push('/update');
       }
     },
     mounted(){

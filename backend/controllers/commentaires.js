@@ -1,7 +1,7 @@
 const models= require ('../models/');
 const commentsModel = models.commentaires;
 
-exports.commentPost=(req, res)=>{
+exports.commentPost=(req, res)=>{ 
   const newComment= { ...req.body }
   commentsModel.create(newComment)
   .then(result=>{res.status(201).json({
@@ -18,4 +18,18 @@ exports.getComments=(req, res)=>{
     comments: result
   })})
   .catch(error=>{res.status(500).json({ErrorOnGetAll: error})});
+}
+exports.modifyComment=(req, res) => {
+  const commentObject = { ...req.body.commentaire };
+  commentsModel.findByPk(req.params.id)
+  .then(()=>{
+    commentsModel.update(commentObject, {where:{ id: req.params.id }})
+      .then(() => res.status(200).json({ 
+        message: 'Commentaire modifié!',
+        post: commentObject
+      }))
+      .catch(error => res.status(500).json({ErrorOnCommentUpdate: error }));
+
+  })
+  .catch(error => res.status(500).json({ error }));
 }

@@ -1,30 +1,29 @@
 <template>
   <body>
     <pageHeader/>
+    <main>
+      <form @submit.prevent="publier" v-if="$store.state.containsImage">
+        <input type='file' accept='image/*' @change='openFile' id="inputFile" ref="inputFile" >
+        <br>
+        <img id='output' :src="imageUrl" height="150">
+        <textarea class="description" v-model="description" placeholder="Commentez votre photo">
+        </textarea>
+        <button type="submit">Publier votre photo</button>
+      </form>
 
-    <form @submit.prevent="publier" v-if="$store.state.containsImage">
-      <input type='file' accept='image/*' @change='openFile' id="inputFile" ref="inputFile" >
-      <br>
-      <img id='output' :src="imageUrl" height="150">
-      <textarea class="description" v-model="description" placeholder="Commentez votre photo">
-      </textarea>
-      <button type="submit">Publier votre photo</button>
-    </form>
+      <form  v-else-if="$store.state.commentaire">  
+        <textarea class="description" v-model="commentaire" placeholder="Commenter ce post">
+        </textarea>
+        <button type="submit" @click="commenter"> Commenter </button>
+      </form>
 
-    <form  v-else-if="$store.state.commentaire">  
-      <textarea class="description" v-model="commentaire" placeholder="Commenter ce post">
-      </textarea>
-      <button type="submit" @click="commenter"> Commenter </button>
-    </form>
-
-    <form v-else>  
-      <textarea class="description" v-model="textToPublish" placeholder="Partagez vos idées">
-      </textarea>
-      <button type="submit" @click="publishText"> Publier votre texte</button>
-    </form>
-
+      <form v-else>  
+        <textarea class="description" v-model="textToPublish" placeholder="Partagez vos idées">
+        </textarea>
+        <button type="submit" @click="publishText"> Publier votre texte</button>
+      </form>
+    </main>
     
-
     <pageFooter/>
     <PostUpdateStyle/>
 

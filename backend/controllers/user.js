@@ -3,17 +3,20 @@ const usersModel=models.user;
 const posts= require ('../models/');
 const postModel= posts.post;
 const bcrypt= require('bcrypt');
+const cryptojs = require("crypto-js");
 const jwt= require('jsonwebtoken');
 require('dotenv').config();
 const fs=require('fs');
 
 exports.signup=(req,res, next)=>{
+  const hashedEmail = cryptojs.HmacSHA512(req.body.email, process.env.SECRET_CRYPTOJS_KEY).toString(cryptojs.enc.Base64);
+
   bcrypt.hash(req.body.motDePasse, 10)
   .then(hash=>{
     const userInfos={
       nom: req.body.nom,
       prenom: req.body.prenom,
-      email: req.body.email,
+      email: hashedEmail,
       isAdmin: req.body.isAdmin,
       motDePasse: hash
     }
@@ -28,7 +31,8 @@ exports.signup=(req,res, next)=>{
 }
 
 exports.login=(req,res, next)=>{
-  usersModel.findOne({where:{email: req.body.email}})
+  const hashedEmail = cryptojs.HmacSHA512(req.body.email, process.env.SECRET_CRYPTOJS_KEY).toString(cryptojs.enc.Base64);
+  usersModel.findOne({where:{email: hashedEmail}})
    .then(theUser=>{
      if(!theUser){
        return res.status(401).json({message: 'Utilisateur inconnu!'});
@@ -55,7 +59,7 @@ exports.login=(req,res, next)=>{
 exports.deleteUser=(req,res, next)=>{
   usersModel.findByPk(req.params.id)
   .then(()=>{
-    postModel.findAll({where:{userId: req.params.id}})
+   postModel.findAll({where:{userId: req.params.id}})
   .then((userPosts)=>{
     if(userPosts.imageUrl==null){
       postModel.destroy({where:{userId: req.params.id}})

@@ -8,11 +8,15 @@
         <div class="photoDesc">
           {{ post.description }} <br>
           <span>par un User le {{post.updatedAt}}</span>
-          <div>
-            <button @click="updatePost(post.id)" v-show="post.userId==this.loggedUserId">Mettre à jour</button>
-            <button @click="deletePost(post.id)" v-show="post.userId==this.loggedUserId || isAdmin== 'true' ">Supprimer</button>
-            <button type="submit" @click="commenter(post.id)"> Commenter </button>
-            <button type="submit" @click="getComments(post.id)">Commentaires</button>
+          <div class="div__buttons">
+            <div>
+              <button @click="updatePost(post.id)" v-show="post.userId==this.loggedUserId">Mettre à jour</button>
+              <button @click="deletePost(post.id)" v-show="post.userId==this.loggedUserId || isAdmin== 'true' ">Supprimer</button>
+            </div>
+            <div>
+              <button type="submit" @click="commenter(post.id)"> Commenter </button>
+              <button type="submit" @click="getComments(post.id)">Commentaires</button>
+            </div>
           </div>
         </div>
       </div>
@@ -121,5 +125,34 @@
     flex-direction: column;
     justify-content:space-around;
     margin: 5px 30px;
+  }
+  @media screen and (max-width: 900px){
+  main{
+    border: none;
+    width:100%;
+  }
+  .div__buttons, .div__buttons div{
+    display:flex;
+  }
+  .div__buttons div{
+  flex-direction: column;
+  margin: 10px auto;
+  }
+  .div__buttons div button{
+    justify-content: space-around
+  }
+}
+  @media screen and (max-width:555px){
+    .pub{
+      flex-direction:column;
+      margin: 10px auto;
+    }
+    img{
+      margin: 10px auto;
+    }
+    .photoDesc{
+      margin: 10px auto;
+      width: 90%;
+    }
   }
 </style>

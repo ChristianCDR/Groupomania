@@ -16,7 +16,7 @@
       <input v-model="nom" placeholder="Nom"/>
       <input v-model="prenom" placeholder="Prenom"/>
       <input @change="setAdmin" v-model="email" placeholder="Adresse e-mail professionnel"/>
-      <input v-model="motDePasse" placeholder="Mot de passe"/>
+      <input @change="validPassword" v-model="motDePasse" placeholder="Mot de passe"/>
 
       <button class="btn-2" type="submit" :class="{'disabled': !validatedFields}" @click="signUserUp"> S'incrire </button>
       <p>Déjà un compte?<a @click="loginMode">Connectez-vous</a></p>    
@@ -69,6 +69,10 @@
         let mail=event.target.value
         if(mail=="admin@groupomania.fr"){
           this.admin= 'true';
+          localStorage.setItem('admin', JSON.stringify(this.admin));
+        }
+        else{
+          this.admin= 'false';
           localStorage.setItem('admin', JSON.stringify(this.admin));
         }
       },

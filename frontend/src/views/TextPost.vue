@@ -7,10 +7,16 @@
       <div class="postBody">
         {{ post.textToPublish }} <br>
         <span>par un User le {{post.updatedAt}}</span> <br>
-        <button @click="updatePost(post.id)" v-show="post.userId==this.loggedUserId" >Mettre à jour</button>
-        <button @click="deletePost(post.id)" v-show="post.userId==this.loggedUserId || isAdmin== 'true' ">Supprimer</button>
-        <button type="submit" @click="commenter(post.id)"> Commenter </button>
-        <button type="submit" @click="getComments(post.id)">Commentaires</button>
+        <div class="div__buttons">
+          <div>
+            <button @click="updatePost(post.id)" v-show="post.userId==this.loggedUserId" >Mettre à jour</button>
+            <button @click="deletePost(post.id)" v-show="post.userId==this.loggedUserId || isAdmin== 'true' ">Supprimer</button>
+          </div>
+          <div>
+            <button type="submit" @click="commenter(post.id)"> Commenter </button>
+            <button type="submit" @click="getComments(post.id)">Commentaires</button>
+          </div>
+        </div>
       </div>
       <div class="comments" v-show="showComments && onePostComments==post.id" v-for="comment in comments" :key="comment.commentaire">
         <div class="singleComment">
@@ -109,5 +115,14 @@
   .postBody{
     width: 80%;
     margin: 0 auto;
+  }
+  @media screen and (max-width: 527px){
+    .div__buttons{
+      display: flex;
+    }
+    main{
+        width: 100%;
+        border:none;
+      }
   }
 </style>

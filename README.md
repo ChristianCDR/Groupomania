@@ -1,24 +1,35 @@
-# gm-app
+# groupomania-app
 
-## Project setup
-```
-npm install
-```
+Faites un git pull
+Installez Node JS
+Faites npm install
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Backend
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Accédez au dossier Backend
+et faites nodemon server
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Frontend
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+npm install -g @vue/cli 
+npm run serve 
+
+## Database
+Vous avez besoin de Mysql
+Mettez le serveur Mysql en marche
+Connectez-vous au serveur
+
+Pour créer la database, faites source suivi du chemin vers le fichier groupomaniaDB.sql 
+
+Pour passer en administrateur, faites source suivi du chemin vers le fichier user.sql 
+
+Dans le fichier user.sql vous pourrez choisir un mot de passe pour l'admin
+
+Le mail de l'admin c'est 'admin@groupomania.fr'
+
+## Autres
+
+Vous avez un fichier .env.example à disposition dans le dossier Backend
+
+Allez dans votre navigateur à l'adresse http://localhost:8080/?#/auth pour pouvoir vous connecter.
+

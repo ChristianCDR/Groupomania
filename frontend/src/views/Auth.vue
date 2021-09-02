@@ -26,7 +26,9 @@
 </template>
 
 <script>
-  
+  const cryptojs = require("crypto-js");
+  require('dotenv').config();
+
   export default { 
     name: 'login',
     components: {
@@ -65,9 +67,11 @@
       signUpMode: function(){
         this.mode="signup"
       },
-      setAdmin: function(event){
+      setAdmin: function(event){ 
         let mail=event.target.value
-        if(mail=="admin@groupomania.fr"){
+        const hashedMail = cryptojs.SHA512(mail).toString(cryptojs.enc.Base64);
+        const adminMail = cryptojs.SHA512('admin@groupomania.fr').toString(cryptojs.enc.Base64);
+        if(hashedMail==adminMail){
           this.admin= 'true';
           localStorage.setItem('admin', JSON.stringify(this.admin));
         }

@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 const axios = require('axios');
-
+//axios permet de faire des appels Backend
+//le token permet d'authentifier chaque requête
 export default createStore({
   state: {
     postOrUpdateMode: "",
@@ -30,6 +31,7 @@ export default createStore({
     }
   },
   actions: {
+    //Appel Backend pour log In
     logUserIn:({commit}, userInfos)=>{
       return new Promise((resolve, reject)=>{
         commit;
@@ -42,7 +44,7 @@ export default createStore({
         });
       })
     },
-
+    //Appel Backend pour Inscrire le user
     signUserUp: ({commit}, userInfos)=>{
       return new Promise((resolve, reject)=>{
         commit;
@@ -51,11 +53,18 @@ export default createStore({
           resolve(response);
         })
         .catch(function (error) {
-          reject(error);
+          let signUpErrorMsg=error.response.data.message;
+
+          if(error.response.status==400){
+            reject(signUpErrorMsg);
+          }
+          else{
+            reject('Erreur: Cet email est déjà utilisé!');
+          }          
         });
       })
     },
-
+    //Appel Backend pour faire un post contenant une image
     publier: ({commit}, formData)=>{
       return new Promise((resolve, reject)=>{
         commit;
@@ -76,6 +85,7 @@ export default createStore({
         });
       })
     },
+    //Appel Backend pour faire un post contenant uniquement du texte
     publishText: ({commit}, postContent)=>{
       return new Promise((resolve, reject)=>{
         commit;
@@ -91,6 +101,7 @@ export default createStore({
         });
       })
     },
+    //Appel Backend pour commenter un post
     commenter: ({commit, state}, postContent)=>{
       return new Promise((resolve, reject)=>{
         commit;
@@ -106,7 +117,7 @@ export default createStore({
         });
       })
     },
-
+    //Appel Backend pour afficher les posts contenant uniquement du texte
     textPost: ({commit})=>{
       return new Promise((resolve, reject)=>{
         commit;
@@ -122,6 +133,7 @@ export default createStore({
         });
       })
     },
+    //Appel Backend pour afficher les posts contenant des images
     imagePost: ({commit})=>{
       return new Promise((resolve, reject)=>{
         commit;
@@ -137,6 +149,7 @@ export default createStore({
         });
       })
     },
+    //Appel Backend pour récupérer les commentaires laissés sur un post
     getComments: ({commit}, post)=>{
       return new Promise((resolve, reject)=>{
         commit;
@@ -152,6 +165,7 @@ export default createStore({
         });
       })
     },
+    //Appel Backend pour update les posts contenant une image
     updateImagePost:({commit},postContent)=>{
       return new Promise((resolve,reject)=>{
         commit;
@@ -167,6 +181,7 @@ export default createStore({
         });
       })
     },
+    //Appel Backend pour update les posts contenant uniquement du texte
     updateTextPost:({commit},postContent)=>{
       return new Promise((resolve,reject)=>{
         commit;
@@ -182,6 +197,7 @@ export default createStore({
         });
       })
     },
+    //Appel Backend pour update un commentaire
     updateComment:({commit, state},postContent)=>{
       return new Promise((resolve,reject)=>{
         commit;
@@ -197,6 +213,7 @@ export default createStore({
         });
       })
     },
+    //Appel Backend pour supprimer un post
     deletePost:({commit}, postToDeleteId)=>{
       return new Promise((resolve,reject)=>{
         commit;
@@ -212,6 +229,23 @@ export default createStore({
         });
       })
     },
+    //Appel Backend pour supprimer un commentaire
+    deleteComment:({commit}, commentToDeleteId)=>{
+      return new Promise((resolve,reject)=>{
+        commit;
+        const token= JSON.parse(localStorage.getItem("datas")).token; 
+        axios.defaults.headers = {'Authorization': `Bearer ${token}`};
+
+        axios.delete(`http://localhost:3000/post/comments/${commentToDeleteId.postId}`)
+        .then(function (response) {
+          resolve(response);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+      })
+    },
+    //Appel Backend pour supprimer un user
     deleteUser:({commit}, userToDeleteId)=>{
       return new Promise((resolve,reject)=>{
         commit;

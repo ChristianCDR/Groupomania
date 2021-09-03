@@ -1,3 +1,4 @@
+//Le template contient 3 formulaires à afficher selon la situation
 <template>
   <body>
     <pageHeader/>
@@ -52,25 +53,26 @@
       }
     },
     methods:{
+      //Publication avec image
       publier: function(){   
         const userId = JSON.parse(localStorage.getItem("datas")).userId;
         this.userId  = userId;
-
+      //On récupère la saisie du user grâce à FormData
         let formData = new FormData();
         formData.append('inputFile', this.image);
         formData.append('description', this.description);
-        formData.append('userId', this.userId);
+        formData.append('userId', this.userId);   
      
         this.$store.dispatch('publier', formData)
         .then((response) => { 
            console.log(response);
+           this.$router.push('/imagePost');
           })
           .catch((error)=>{
             console.log(error);
           })
-        this.$router.push('/imagePost');
       },
-
+    //Publication Texte
       publishText: function(){
         const datas = JSON.parse(localStorage.getItem("datas"));
         this.$store.dispatch('publishText', {
@@ -85,6 +87,7 @@
             console.log('errorFromPublishText:', error);
           })
       },
+      //Appel de l'action permettant de poster des commentaires
       commenter: function(){
         const datas = JSON.parse(localStorage.getItem("datas"));
         const postId = this.$store.state.postToCommentId;
@@ -101,6 +104,7 @@
             console.log('errorFromCommentaire:', error);
           })
       },
+      //Fonction permettant d'afficher l'image que le user a sélectionné
       openFile: function(event) { 
         const files = event.target.files;
         let filename = files[0].name;

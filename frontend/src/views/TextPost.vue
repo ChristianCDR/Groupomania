@@ -1,3 +1,5 @@
+//Cette page sert à afficher les posts contenant uniquement du texte
+
 <template>
   
   <pageHeader/>
@@ -6,7 +8,7 @@
     <div class="publications" v-for="post in posts" :key="post.description">
       <div class="postBody">
         {{ post.textToPublish }} <br>
-        <span>par un User le {{post.updatedAt}}</span> <br>
+        <span>par le User {{ post.userId }} le {{post.updatedAt.split('T')[0]}} à {{post.updatedAt.split('T')[1].split('.')[0]}}</span> <br>
         <div class="div__buttons">
           <div>
             <button @click="updatePost(post.id)" v-show="post.userId==this.loggedUserId" >Mettre à jour</button>
@@ -21,6 +23,9 @@
       <div class="comments" v-show="showComments && onePostComments==post.id" v-for="comment in comments" :key="comment.commentaire">
         <div class="singleComment">
           {{comment.commentaire}}<br>
+          <span>par le User {{ comment.userId }} le {{comment.updatedAt.split('T')[0]}} à {{comment.updatedAt.split('T')[1].split('.')[0]}}</span> <br>
+          <button type="submit" @click="updateComment(comment.id)" v-show="comment.userId==this.loggedUserId">Modifier</button>
+          <button type="submit" @click="deleteComment(comment.id)" v-show="comment.userId==this.loggedUserId || isAdmin== 'true'">Supprimer</button>
         </div>  
       </div>
     </div> 
@@ -97,12 +102,23 @@
           postId:id
           });
         this.$router.push('/update');
+      },
+      deleteComment: function(id){
+        store.dispatch('deleteComment',{ postId:id })
+        .then((result)=>{
+           console.log(result)
+           window.location.reload();
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
       }
     },
     mounted(){
       this.$store.dispatch('textPost')
       .then((response) => {  
         let textPostTab=[];   
+        //Au chargement de la page, on sélectionne les posts ne contenant pas d'image
         for(let post of response.data.posts){
           if(post.imageUrl==null){
             textPostTab.unshift(post)

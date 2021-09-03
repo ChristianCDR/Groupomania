@@ -7,7 +7,7 @@ module.exports=(req,res,next)=>{
       const token= req.headers.authorization.split(' ')[1];
       const decodedToken= jwt.verify(token, process.env.TOKEN_SECRET_KEY);
       const userId= decodedToken.userId;
- 
+  //Si le userId n'est pas dans la db, on en renvoie une erreur
       if(req.body.userId && req.body.userId !== userId){
         throw 'Identifiant utilisateur non valable';
       }

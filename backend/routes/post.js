@@ -12,5 +12,6 @@ route.get('/:id',auth, ctrlCom.getComments);
 route.put('/:id',auth, multer, ctrlPost.modifyPost);
 route.put('/comments/:id',auth,ctrlCom.modifyComment);
 route.delete('/:id',auth, ctrlPost.deletePost);
+route.delete('/comments/:id',auth, ctrlCom.deleteComment);
 
 module.exports= route;

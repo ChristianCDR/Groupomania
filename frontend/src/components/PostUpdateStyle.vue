@@ -1,6 +1,7 @@
 <template>
   <PostUpdateStyle/>
 </template>
+//Stylesheet des pages Post.vue et Update.vue
 <style>
   .description{
     width:300px;

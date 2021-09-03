@@ -1,3 +1,4 @@
+//Cette page sert à afficher les posts contenant des images
 <template>
   <pageHeader/>
   <main>
@@ -7,7 +8,7 @@
         <img :src='post.imageUrl' alt="Photo publiée">
         <div class="photoDesc">
           {{ post.description }} <br>
-          <span>par un User le {{post.updatedAt}}</span>
+           <span>par le User {{ post.userId }} le {{post.updatedAt.split('T')[0]}} à {{post.updatedAt.split('T')[1].split('.')[0]}}</span> <br>
           <div class="div__buttons">
             <div>
               <button @click="updatePost(post.id)" v-show="post.userId==this.loggedUserId">Mettre à jour</button>
@@ -22,8 +23,11 @@
       </div>
       <div class="comments" v-show="showComments && onePostComments==post.id" v-for="comment in comments" :key="comment.commentaire">
         <div class="singleComment">
-          {{comment.commentaire}}
-        </div>  <br>
+          {{comment.commentaire}} <br>
+          <span>par le User {{ comment.userId }} le {{comment.updatedAt.split('T')[0]}} à {{comment.updatedAt.split('T')[1].split('.')[0]}}</span> <br>
+          <button type="submit" @click="updateComment(comment.id)" v-show="comment.userId==this.loggedUserId">Modifier</button>
+          <button type="submit" @click="deleteComment(comment.id)" v-show="comment.userId==this.loggedUserId || isAdmin== 'true'">Supprimer</button>
+        </div> 
       </div>
     </div>
   </main>
@@ -38,6 +42,7 @@
 
   export default{
     name:'imagePost',
+    //Importation de components
     components:{
       pageHeader,
       pageFooter,
@@ -90,12 +95,32 @@
         .catch(error=>{
           console.log(error)
         });
+      },
+      updateComment: function(id){
+        store.commit('comments',{
+          commentaire: true,
+          postId:id
+          });
+        this.$router.push('/update');
+      },
+      deleteComment: function(id){
+        store.dispatch('deleteComment',{ postId:id })
+        .then((result)=>{
+           console.log(result)
+           window.location.reload();
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
       }
     },
+
+    //Au chargement de la page
     mounted(){
       this.$store.dispatch('imagePost')
       .then((response) => {  
         let textImageTab=[];
+        //Apres la réponse du backend on sélectionne les posts contenant des images
         for(let post of response.data.posts){
           if(post.imageUrl){
             textImageTab.unshift(post)

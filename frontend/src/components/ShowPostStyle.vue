@@ -1,7 +1,7 @@
 <template>
   <div></div>
 </template>
-
+//Stylesheet des pages où j'affiche les posts
 <style >
   main{
     min-height:700px;

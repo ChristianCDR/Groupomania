@@ -8,10 +8,13 @@ const MIME_TYPES = {
   'image/gif': 'gif',
 };
 
+//Configuration du stockage du fichier
 const storage= multer.diskStorage({
+  //On désigne une destination pour les fichiers
   destination:(req,file,callback)=>{
     callback(null,'images');
   },
+  //On crée un nom unique pour le fichier
   filename:(req,file,callback)=>{
     const name= file.originalname.split(' ').join('_').split('.')[0];
     const extension= MIME_TYPES[file.mimetype];

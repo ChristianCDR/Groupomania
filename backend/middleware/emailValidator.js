@@ -4,7 +4,9 @@
 -1 ou plusieurs chiffres,
 -des points, tirets, underscores,
 - 1 @,
--1 point
+-'groupomania',
+-1 point,
+-une extension de 2 à 10 lettres
  */
 exports.emailValidator = (req, res, next) => {
   try{
@@ -12,9 +14,8 @@ exports.emailValidator = (req, res, next) => {
 
       let emailRegExp = new RegExp('^[a-z0-9.-_]+[@]{1}[groupomania]+[.]{1}[a-z]{2,10}$', 'g');
       let emailTest = emailRegExp.test(email); 
-
+  //Si le mail ne satisfait pas, on renvoie une erreur
       if(!emailTest){
-       // res.status(400).json({ message: 'Adresse mail invalide !' });
        throw 'Mail invalide';
       }
       else{
@@ -25,6 +26,6 @@ exports.emailValidator = (req, res, next) => {
     validEmail(req.body.email)
   }
   catch(error){
-    res.status(401).json({ errorFromEmailValidator: error });
+    res.status(400).json({ message: error });
   }
 };

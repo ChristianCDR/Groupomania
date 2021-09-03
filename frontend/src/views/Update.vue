@@ -1,3 +1,4 @@
+//Deux formulaires à afficher selon la situation
 <template>
   <pageHeader/>
   
@@ -90,6 +91,7 @@
           console.log(error)
         });
       },
+      //Fonction permettant d'afficher la nouvelle image
       openFile: function(event) { 
         const files = event.target.files;
         let filename = files[0].name;

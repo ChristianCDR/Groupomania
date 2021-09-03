@@ -1,3 +1,4 @@
+//L'accueil propose de choisir le type de post que l'on souhaite faire
 <template>
   <body>
     <p class='welcomeMsg'> Bienvenue sur le réseau social <span> interne de Groupomania</span>

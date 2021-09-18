@@ -5,7 +5,7 @@ const postModel= posts.post;
 const bcrypt= require('bcrypt');
 const cryptojs = require("crypto-js");
 const jwt= require('jsonwebtoken');
-require('dotenv').config();
+require('dotenv').config(); 
 const fs=require('fs');
 
 //Enregistrement du nouvel utilisateur
